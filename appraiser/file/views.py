@@ -12,14 +12,15 @@ from . import calculations
 
 def index(request):
     files = File.objects.filter(owner=request.user)
-    context = {'files':files}
+    context = {'files': files}
     return render(request, 'index.html', context)
+
 
 @login_required
 def upload(request):
     form = FileModelForm(request.POST or None, files=request.FILES or None)
     context = {'form': form}
-    
+
     def create_token(tokens, count_all, file):
         to_text = nltk.Text(tokens)
         fdist = nltk.FreqDist(to_text)
@@ -29,9 +30,10 @@ def upload(request):
                 word=token)
             FileToken.objects.get_or_create(
                 token=current_token, file=file, tf=count_t/count_all
-                )
-            count_D_with_t = FileToken.objects.filter(file__owner=request.user, token=current_token).count()
-            current_token.idf=math.log(files/count_D_with_t)
+            )
+            count_D_with_t = FileToken.objects.filter(
+                file__owner=request.user, token=current_token).count()
+            current_token.idf = math.log(files/count_D_with_t)
             current_token.save()
 
     if form.is_valid():
@@ -40,11 +42,12 @@ def upload(request):
         obj.save()
         text = calculations.import_text(obj.file.path)
         tokens = calculations.word_tokenize(calculations.clean_text(text))
-        
+
         obj.tokens_counter = len(tokens)
         create_token(tokens, obj.tokens_counter, obj)
         return redirect('file_tf_idf', obj.name)
     return render(request, 'new.html', context)
+
 
 @login_required
 def file_tf_idf(request, file):
@@ -53,12 +56,14 @@ def file_tf_idf(request, file):
     context = {'file': file, 'tokens': tokens}
     return render(request, 'file.html', context)
 
+
 @login_required
 def dictionary(request):
-    owner = request.user 
+    owner = request.user
     tokens = FileToken.objects.filter(file__owner=owner)[:50]
     context = {'tokens': tokens}
     return render(request, 'dictionary.html', context)
+
 
 @login_required
 def delete_file(request, id):
