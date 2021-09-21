@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Check yours texts{% endblock %} | Appraiser</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/starter-template.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+  </head>
+  <body>
+    <main>
+      <div class="col-lg-8 mx-auto p-3 py-md-5">
+        {% block content %}{% endblock content %}
+      <div>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+<div class="card mb-3 mt-1 shadow-sm">
+  <div class="card-body">
+    <p class="card-text">
+      <a name="{{ file.name }}" href="{% url 'file_tf_idf' file.name %}">
+        <strong class="d-block text-gray-dark">Перейти к таблице {{ file.name }}</strong>
+      </a>
+    </p>
+  </div>
+</div>

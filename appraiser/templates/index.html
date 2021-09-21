@@ -1,0 +1,40 @@
+{% extends "includes/base.html" %}
+{% block content %}
+
+  {% include "includes/header.html" %}
+
+  <main>
+    <h1>Анализируй текст с Appriser</h1>
+    <p class="fs-5 col-md-8">Простой анализ текста TF-IDF покажет тебе какие слова наиболее важные в контексте твоих документов.</p>
+
+    <div class="mb-5">
+      <a href="{% url "upload" %}" class="btn btn-primary btn-lg px-4">Загрузить файл</a>
+    </div>
+
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+      <div class="col-md-6">
+        <h2>Твоя коллекция</h2>
+        <p>То, что ты уже загрузил</p>
+        <ul class="icon-list">
+          {% for file in files %}
+            <li>
+              <a href="{% url 'file_tf_idf' file.name%}" rel="noopener" target="_blank" class="mr-auto">{{ file.name }}</a>
+              <a href="{% url 'delete' file.id%}" rel="noopener" target="_blank" class="mx p-1"> Удалить </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h2>Словарь</h2>
+        <p>Тут все слова из твоих файлов</p>
+        <ul class="icon-list">
+          <li><a href="{% url 'dictionary' %}">TF-IDF для всей колекции</a></li>
+          <li class="text-muted"</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+{% endblock %}
